@@ -40,14 +40,18 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             ['label' => 'Inicio', 'url' => ['/site/index']],
-            ['label' => 'Sobre Nosotros', 'url' => ['/site/about']],
-            ['label' => 'Contáctenos', 'url' => ['/site/contact']],
-            ['label' => 'Actores', 'url' => ['/actor/index']],
-            ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
-            ['label' => 'Trades', 'url' => ['/trades/index']],
-            ['label' => 'Modulos', 'url' => ['/modulos/index']],
-            ['label' => 'Lecciones', 'url' => ['/lessons/index']],
-            ['label' => 'Estrategias', 'url' => ['/estrategias/index']],
+            //['label' => 'Sobre Nosotros', 'url' => ['/site/about']],
+            //['label' => 'Contáctenos', 'url' => ['/site/contact']],
+            //['label' => 'Actores', 'url' => ['/actor/index']],
+            ['label' => 'Cursos',
+                'items' => [
+                    ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
+                    ['label' => 'Trades', 'url' => ['/trades/index']],
+                    ['label' => 'Modulos', 'url' => ['/modulos/index']],
+                    ['label' => 'Lecciones', 'url' => ['/lessons/index']],
+                    ['label' => 'Estrategias', 'url' => ['/estrategias/index']],
+                ]
+                ],
             Yii::$app->user->isGuest
                 ? ['label' => 'Iniciar Sesión', 'url' => ['/site/login']]
                 : '<li class="nav-item">'
