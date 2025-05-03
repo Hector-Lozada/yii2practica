@@ -17,6 +17,13 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'VSwFfWpgsSNNJNlgB77h2voRJVVfayIY',
         ],
+        'formatter' => [
+        'class' => 'yii\i18n\Formatter',
+        'currencyCode' => 'USD', // Configura tu moneda preferida (USD, EUR, MXN, etc.)
+        'decimalSeparator' => '.',
+        'thousandSeparator' => ',',
+        // Elimina las opciones de NumberFormatter
+    ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],

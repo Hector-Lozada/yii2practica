@@ -2,11 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use yii\i18n\Formatter;
 /** @var yii\web\View $this */
 /** @var app\models\Trades $model */
 
-$this->title = $model->trade_id;
+$this->title = 'Trade #' . $model->trade_id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Trades'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -30,16 +30,38 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'trade_id',
-            'user_id',
-            'lesson_id',
-            'strategy_id',
-            'entry_price',
-            'exit_price',
-            'entry_date',
-            'exit_date',
+            [
+                'attribute' => 'user_id',
+                'value' => $model->user->username ?? 'N/A', // Muestra el nombre de usuario
+            ],
+            [
+                'attribute' => 'lesson_id',
+                'value' => $model->lesson->title ?? 'N/A', // Muestra el título de la lección
+            ],
+            [
+                'attribute' => 'strategy_id',
+                'value' => $model->strategy->name ?? 'N/A', // Muestra el nombre de la estrategia
+            ],
+            'entry_price:currency',
+            'exit_price:currency',
+            'entry_date:datetime',
+            'exit_date:datetime',
             'description:ntext',
-            'image_path',
-            'created_at',
+            [
+                'attribute' => 'image_path',
+                'format' => 'html',
+                'value' => function($model) {
+                    if ($model->image_path) {
+                        return Html::img($model->image_path, [
+                            'style' => 'max-width: 300px; max-height: 300px;',
+                            'class' => 'img-thumbnail',
+                            'alt' => 'Imagen del Trade'
+                        ]);
+                    }
+                    return 'No hay imagen';
+                },
+            ],
+            'created_at:datetime',
         ],
     ]) ?>
 
