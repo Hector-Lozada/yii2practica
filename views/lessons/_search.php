@@ -18,13 +18,19 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'idlessons') ?>
+    <?= $form->field($model, 'lesson_id') ?>
 
-    <?= $form->field($model, 'id_modules') ?>
+    <?= $form->field($model, 'course_id') ?>
 
-    <?= $form->field($model, 'titulo') ?>
+    <?= $form->field($model, 'strategy_id') ?>
 
-    <?= $form->field($model, 'videourl') ?>
+    <?= $form->field($model, 'title') ?>
+
+    <?= $form->field($model, 'content') ?>
+
+    <?php // echo $form->field($model, 'video_path') ?>
+
+    <?php // echo $form->field($model, 'created_at') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

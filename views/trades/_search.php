@@ -18,21 +18,27 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'idTrades') ?>
+    <?= $form->field($model, 'trade_id') ?>
 
-    <?= $form->field($model, 'simbolo') ?>
+    <?= $form->field($model, 'user_id') ?>
 
-    <?= $form->field($model, 'precio_entrada') ?>
+    <?= $form->field($model, 'lesson_id') ?>
 
-    <?= $form->field($model, 'precio_salida') ?>
+    <?= $form->field($model, 'strategy_id') ?>
 
-    <?= $form->field($model, 'pnl') ?>
+    <?= $form->field($model, 'entry_price') ?>
 
-    <?php // echo $form->field($model, 'fecha') ?>
+    <?php // echo $form->field($model, 'exit_price') ?>
 
-    <?php // echo $form->field($model, 'comentario') ?>
+    <?php // echo $form->field($model, 'entry_date') ?>
 
-    <?php // echo $form->field($model, 'estrategia_id') ?>
+    <?php // echo $form->field($model, 'exit_date') ?>
+
+    <?php // echo $form->field($model, 'description') ?>
+
+    <?php // echo $form->field($model, 'image_path') ?>
+
+    <?php // echo $form->field($model, 'created_at') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

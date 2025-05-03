@@ -17,9 +17,9 @@ class TradesSearch extends Trades
     public function rules()
     {
         return [
-            [['idTrades', 'estrategia_id'], 'integer'],
-            [['simbolo', 'fecha', 'comentario'], 'safe'],
-            [['precio_entrada', 'precio_salida', 'pnl'], 'number'],
+            [['trade_id', 'user_id', 'lesson_id', 'strategy_id'], 'integer'],
+            [['entry_price', 'exit_price'], 'number'],
+            [['entry_date', 'exit_date', 'description', 'image_path', 'created_at'], 'safe'],
         ];
     }
 
@@ -60,16 +60,19 @@ class TradesSearch extends Trades
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'idTrades' => $this->idTrades,
-            'precio_entrada' => $this->precio_entrada,
-            'precio_salida' => $this->precio_salida,
-            'pnl' => $this->pnl,
-            'fecha' => $this->fecha,
-            'estrategia_id' => $this->estrategia_id,
+            'trade_id' => $this->trade_id,
+            'user_id' => $this->user_id,
+            'lesson_id' => $this->lesson_id,
+            'strategy_id' => $this->strategy_id,
+            'entry_price' => $this->entry_price,
+            'exit_price' => $this->exit_price,
+            'entry_date' => $this->entry_date,
+            'exit_date' => $this->exit_date,
+            'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'simbolo', $this->simbolo])
-            ->andFilterWhere(['like', 'comentario', $this->comentario]);
+        $query->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'image_path', $this->image_path]);
 
         return $dataProvider;
     }

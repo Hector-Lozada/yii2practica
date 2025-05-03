@@ -49,14 +49,14 @@ class TradesController extends Controller
 
     /**
      * Displays a single Trades model.
-     * @param int $idTrades Id Trades
+     * @param int $trade_id Trade ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($idTrades)
+    public function actionView($trade_id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($idTrades),
+            'model' => $this->findModel($trade_id),
         ]);
     }
 
@@ -71,7 +71,7 @@ class TradesController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'idTrades' => $model->idTrades]);
+                return $this->redirect(['view', 'trade_id' => $model->trade_id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -85,16 +85,16 @@ class TradesController extends Controller
     /**
      * Updates an existing Trades model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $idTrades Id Trades
+     * @param int $trade_id Trade ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($idTrades)
+    public function actionUpdate($trade_id)
     {
-        $model = $this->findModel($idTrades);
+        $model = $this->findModel($trade_id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'idTrades' => $model->idTrades]);
+            return $this->redirect(['view', 'trade_id' => $model->trade_id]);
         }
 
         return $this->render('update', [
@@ -105,13 +105,13 @@ class TradesController extends Controller
     /**
      * Deletes an existing Trades model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $idTrades Id Trades
+     * @param int $trade_id Trade ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($idTrades)
+    public function actionDelete($trade_id)
     {
-        $this->findModel($idTrades)->delete();
+        $this->findModel($trade_id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -119,13 +119,13 @@ class TradesController extends Controller
     /**
      * Finds the Trades model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $idTrades Id Trades
+     * @param int $trade_id Trade ID
      * @return Trades the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($idTrades)
+    protected function findModel($trade_id)
     {
-        if (($model = Trades::findOne(['idTrades' => $idTrades])) !== null) {
+        if (($model = Trades::findOne(['trade_id' => $trade_id])) !== null) {
             return $model;
         }
 

@@ -30,18 +30,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'idTrades',
-            'simbolo',
-            'precio_entrada',
-            'precio_salida',
-            'pnl',
-            //'fecha',
-            //'comentario:ntext',
-            //'estrategia_id',
+            'trade_id',
+            'user_id',
+            'lesson_id',
+            'strategy_id',
+            'entry_price',
+            //'exit_price',
+            //'entry_date',
+            //'exit_date',
+            //'description:ntext',
+            //'image_path',
+            //'created_at',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Trades $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'idTrades' => $model->idTrades]);
+                    return Url::toRoute([$action, 'trade_id' => $model->trade_id]);
                  }
             ],
         ],

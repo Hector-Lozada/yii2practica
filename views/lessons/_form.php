@@ -10,15 +10,22 @@ use yii\widgets\ActiveForm;
 
 <div class="lessons-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options' => ['enctype' => 'multipart/form-data']
+    ]); ?>
 
-    <?= $form->field($model, 'idlessons')->textInput() ?>
+    <?= $form->field($model, 'course_id')->textInput() ?>
 
-    <?= $form->field($model, 'id_modules')->textInput() ?>
+    <?= $form->field($model, 'strategy_id')->textInput() ?>
 
-    <?= $form->field($model, 'titulo')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'videourl')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+
+    <!-- ✅ Campo corregido para subir el archivo -->
+    <?= $form->field($model, 'videoFile')->fileInput() ?>
+
+    <?= $form->field($model, 'created_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

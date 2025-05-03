@@ -45,11 +45,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             //['label' => 'Actores', 'url' => ['/actor/index']],
             ['label' => 'Cursos',
                 'items' => [
-                    ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
+                    ['label' => 'Usuarios', 'url' => ['/users/index']],
                     ['label' => 'Trades', 'url' => ['/trades/index']],
-                    ['label' => 'Modulos', 'url' => ['/modulos/index']],
+                    ['label' => 'Modulos', 'url' => ['/courses/index']],
                     ['label' => 'Lecciones', 'url' => ['/lessons/index']],
-                    ['label' => 'Estrategias', 'url' => ['/estrategias/index']],
+                    ['label' => 'Estrategias', 'url' => ['/strategies/index']],
                 ]
                 ],
             Yii::$app->user->isGuest

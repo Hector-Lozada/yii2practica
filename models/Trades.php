@@ -5,19 +5,23 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "Trades".
+ * This is the model class for table "trades".
  *
- * @property int $idTrades
- * @property string|null $simbolo
- * @property float|null $precio_entrada
- * @property float|null $precio_salida
- * @property float|null $pnl
- * @property string|null $fecha
- * @property string|null $comentario
- * @property int|null $estrategia_id
+ * @property int $trade_id
+ * @property int|null $user_id
+ * @property int|null $lesson_id
+ * @property int|null $strategy_id
+ * @property float $entry_price
+ * @property float|null $exit_price
+ * @property string $entry_date
+ * @property string|null $exit_date
+ * @property string|null $description
+ * @property string|null $image_path
+ * @property string|null $created_at
  *
- * @property Estrategias[] $estrategias
- * @property Usuarios[] $usuarios
+ * @property Lessons $lesson
+ * @property Strategies $strategy
+ * @property Users $user
  */
 class Trades extends \yii\db\ActiveRecord
 {
@@ -28,7 +32,7 @@ class Trades extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'Trades';
+        return 'trades';
     }
 
     /**
@@ -37,12 +41,16 @@ class Trades extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['simbolo', 'precio_entrada', 'precio_salida', 'pnl', 'fecha', 'comentario', 'estrategia_id'], 'default', 'value' => null],
-            [['precio_entrada', 'precio_salida', 'pnl'], 'number'],
-            [['fecha'], 'safe'],
-            [['comentario'], 'string'],
-            [['estrategia_id'], 'integer'],
-            [['simbolo'], 'string', 'max' => 45],
+            [['user_id', 'lesson_id', 'strategy_id', 'exit_price', 'exit_date', 'description', 'image_path'], 'default', 'value' => null],
+            [['user_id', 'lesson_id', 'strategy_id'], 'integer'],
+            [['entry_price', 'entry_date'], 'required'],
+            [['entry_price', 'exit_price'], 'number'],
+            [['entry_date', 'exit_date', 'created_at'], 'safe'],
+            [['description'], 'string'],
+            [['image_path'], 'string', 'max' => 255],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['user_id' => 'user_id']],
+            [['lesson_id'], 'exist', 'skipOnError' => true, 'targetClass' => Lessons::class, 'targetAttribute' => ['lesson_id' => 'lesson_id']],
+            [['strategy_id'], 'exist', 'skipOnError' => true, 'targetClass' => Strategies::class, 'targetAttribute' => ['strategy_id' => 'strategy_id']],
         ];
     }
 
@@ -52,35 +60,48 @@ class Trades extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idTrades' => Yii::t('app', 'Id Trades'),
-            'simbolo' => Yii::t('app', 'Simbolo'),
-            'precio_entrada' => Yii::t('app', 'Precio Entrada'),
-            'precio_salida' => Yii::t('app', 'Precio Salida'),
-            'pnl' => Yii::t('app', 'Pnl'),
-            'fecha' => Yii::t('app', 'Fecha'),
-            'comentario' => Yii::t('app', 'Comentario'),
-            'estrategia_id' => Yii::t('app', 'Estrategia ID'),
+            'trade_id' => Yii::t('app', 'Trade ID'),
+            'user_id' => Yii::t('app', 'User ID'),
+            'lesson_id' => Yii::t('app', 'Lesson ID'),
+            'strategy_id' => Yii::t('app', 'Strategy ID'),
+            'entry_price' => Yii::t('app', 'Entry Price'),
+            'exit_price' => Yii::t('app', 'Exit Price'),
+            'entry_date' => Yii::t('app', 'Entry Date'),
+            'exit_date' => Yii::t('app', 'Exit Date'),
+            'description' => Yii::t('app', 'Description'),
+            'image_path' => Yii::t('app', 'Image Path'),
+            'created_at' => Yii::t('app', 'Created At'),
         ];
     }
 
     /**
-     * Gets query for [[Estrategias]].
+     * Gets query for [[Lesson]].
      *
-     * @return \yii\db\ActiveQuery|EstrategiasQuery
+     * @return \yii\db\ActiveQuery|LessonsQuery
      */
-    public function getEstrategias()
+    public function getLesson()
     {
-        return $this->hasMany(Estrategias::class, ['Trades_idTrades' => 'idTrades']);
+        return $this->hasOne(Lessons::class, ['lesson_id' => 'lesson_id']);
     }
 
     /**
-     * Gets query for [[Usuarios]].
+     * Gets query for [[Strategy]].
      *
-     * @return \yii\db\ActiveQuery|UsuariosQuery
+     * @return \yii\db\ActiveQuery|StrategiesQuery
      */
-    public function getUsuarios()
+    public function getStrategy()
     {
-        return $this->hasMany(Usuarios::class, ['Trades_idTrades' => 'idTrades']);
+        return $this->hasOne(Strategies::class, ['strategy_id' => 'strategy_id']);
+    }
+
+    /**
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery|UsersQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(Users::class, ['user_id' => 'user_id']);
     }
 
     /**

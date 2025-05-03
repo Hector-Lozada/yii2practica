@@ -30,14 +30,17 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'idlessons',
-            'id_modules',
-            'titulo',
-            'videourl',
+            'lesson_id',
+            'course_id',
+            'strategy_id',
+            'title',
+            'content:ntext',
+            //'video_path',
+            //'created_at',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Lessons $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'idlessons' => $model->idlessons]);
+                    return Url::toRoute([$action, 'lesson_id' => $model->lesson_id]);
                  }
             ],
         ],

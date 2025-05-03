@@ -6,10 +6,10 @@ use yii\helpers\Html;
 /** @var app\models\Trades $model */
 
 $this->title = Yii::t('app', 'Update Trades: {name}', [
-    'name' => $model->idTrades,
+    'name' => $model->trade_id,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Trades'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->idTrades, 'url' => ['view', 'idTrades' => $model->idTrades]];
+$this->params['breadcrumbs'][] = ['label' => $model->trade_id, 'url' => ['view', 'trade_id' => $model->trade_id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="trades-update">

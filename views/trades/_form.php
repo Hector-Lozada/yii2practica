@@ -12,19 +12,25 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'simbolo')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'user_id')->textInput() ?>
 
-    <?= $form->field($model, 'precio_entrada')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'lesson_id')->textInput() ?>
 
-    <?= $form->field($model, 'precio_salida')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'strategy_id')->textInput() ?>
 
-    <?= $form->field($model, 'pnl')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'entry_price')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'fecha')->textInput() ?>
+    <?= $form->field($model, 'exit_price')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'comentario')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'entry_date')->textInput() ?>
 
-    <?= $form->field($model, 'estrategia_id')->textInput() ?>
+    <?= $form->field($model, 'exit_date')->textInput() ?>
+
+    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'image_path')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'created_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
