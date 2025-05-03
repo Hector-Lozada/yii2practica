@@ -28,7 +28,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'image_path')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'imageFile')->fileInput() ?>
+    <small class="text-muted">Formatos permitidos: png, jpg, jpeg, gif (max 5MB)</small>
+
+    <?php if (!$model->isNewRecord && $model->image_path): ?>
+        <div class="form-group">
+            <label>Imagen Actual</label>
+            <div>
+                <img src="<?= $model->image_path ?>" alt="Imagen del trade" style="max-width: 200px; max-height: 200px;">
+            </div>
+        </div>
+    <?php endif; ?>
 
     <?= $form->field($model, 'created_at')->textInput() ?>
 

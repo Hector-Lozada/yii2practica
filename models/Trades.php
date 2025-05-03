@@ -3,30 +3,15 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "trades".
- *
- * @property int $trade_id
- * @property int|null $user_id
- * @property int|null $lesson_id
- * @property int|null $strategy_id
- * @property float $entry_price
- * @property float|null $exit_price
- * @property string $entry_date
- * @property string|null $exit_date
- * @property string|null $description
- * @property string|null $image_path
- * @property string|null $created_at
- *
- * @property Lessons $lesson
- * @property Strategies $strategy
- * @property Users $user
  */
 class Trades extends \yii\db\ActiveRecord
 {
-
-
+    public $imageFile; // Atributo para el archivo de imagen
+    
     /**
      * {@inheritdoc}
      */
@@ -41,13 +26,13 @@ class Trades extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'lesson_id', 'strategy_id', 'exit_price', 'exit_date', 'description', 'image_path'], 'default', 'value' => null],
-            [['user_id', 'lesson_id', 'strategy_id'], 'integer'],
             [['entry_price', 'entry_date'], 'required'],
+            [['user_id', 'lesson_id', 'strategy_id'], 'integer'],
             [['entry_price', 'exit_price'], 'number'],
             [['entry_date', 'exit_date', 'created_at'], 'safe'],
             [['description'], 'string'],
             [['image_path'], 'string', 'max' => 255],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, gif', 'maxSize' => 5 * 1024 * 1024], // 5MB
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['user_id' => 'user_id']],
             [['lesson_id'], 'exist', 'skipOnError' => true, 'targetClass' => Lessons::class, 'targetAttribute' => ['lesson_id' => 'lesson_id']],
             [['strategy_id'], 'exist', 'skipOnError' => true, 'targetClass' => Strategies::class, 'targetAttribute' => ['strategy_id' => 'strategy_id']],
@@ -60,19 +45,69 @@ class Trades extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'trade_id' => Yii::t('app', 'Trade ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'lesson_id' => Yii::t('app', 'Lesson ID'),
-            'strategy_id' => Yii::t('app', 'Strategy ID'),
-            'entry_price' => Yii::t('app', 'Entry Price'),
-            'exit_price' => Yii::t('app', 'Exit Price'),
-            'entry_date' => Yii::t('app', 'Entry Date'),
-            'exit_date' => Yii::t('app', 'Exit Date'),
-            'description' => Yii::t('app', 'Description'),
-            'image_path' => Yii::t('app', 'Image Path'),
-            'created_at' => Yii::t('app', 'Created At'),
+            'trade_id' => 'ID',
+            'user_id' => 'Usuario',
+            'lesson_id' => 'Lección',
+            'strategy_id' => 'Estrategia',
+            'entry_price' => 'Precio de Entrada',
+            'exit_price' => 'Precio de Salida',
+            'entry_date' => 'Fecha de Entrada',
+            'exit_date' => 'Fecha de Salida',
+            'description' => 'Descripción',
+            'image_path' => 'Imagen',
+            'imageFile' => 'Subir Imagen',
+            'created_at' => 'Creado',
         ];
     }
+
+    /**
+     * Sube la imagen al servidor
+     */
+    public function upload()
+    {
+        if ($this->imageFile) {
+            $uploadDir = Yii::getAlias('@webroot/uploads/images/');
+            if (!file_exists($uploadDir)) {
+                mkdir($uploadDir, 0775, true);
+            }
+
+            $fileName = uniqid() . '.' . $this->imageFile->extension;
+            $filePath = $uploadDir . $fileName;
+
+            if ($this->imageFile->saveAs($filePath)) {
+                $this->image_path = '/uploads/images/' . $fileName;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Elimina la imagen asociada
+     */
+    public function deleteImage()
+    {
+        if ($this->image_path && file_exists(Yii::getAlias('@webroot' . $this->image_path))) {
+            unlink(Yii::getAlias('@webroot' . $this->image_path));
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Before delete hook
+     */
+    public function beforeDelete()
+    {
+        if (!parent::beforeDelete()) {
+            return false;
+        }
+
+        $this->deleteImage();
+        return true;
+    }
+
+    // ... (mantén tus relaciones existentes)
 
     /**
      * Gets query for [[Lesson]].
@@ -112,5 +147,6 @@ class Trades extends \yii\db\ActiveRecord
     {
         return new TradesQuery(get_called_class());
     }
+
 
 }

@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
     <!-- ✅ Campo corregido para subir el archivo -->
     <?= $form->field($model, 'videoFile')->fileInput() ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+    <?php // $form->field($model, 'created_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
